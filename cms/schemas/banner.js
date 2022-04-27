@@ -17,8 +17,8 @@ export default {
       type: 'string',
     },
     {
-      name: 'product',
-      title: 'Product',
+      name: 'title',
+      title: 'Title',
       type: 'string',
     },
     {
