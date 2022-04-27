@@ -1,12 +1,14 @@
 import React from 'react'
 import Hero from '../components/Hero'
+import FeaturedItems from '../components/FeaturedItems'
 import { client } from '../utils/sanityClient';
 
 const Homepage = ({ products, banner }) => {
-  console.log(banner && banner.length && banner[0]);
+  console.log(products);
   return (
     <div>
       <Hero bannerData={banner && banner.length && banner[0]} />
+      <FeaturedItems products={products} />
     </div>
   )
 }

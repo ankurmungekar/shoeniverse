@@ -32,6 +32,14 @@ export default {
       type: 'number',
     },
     {
+      name: 'brand',
+      title: 'Brand',
+      type: 'reference',
+      to: [
+        { type: 'brand' },
+      ]
+    },
+    {
       name: 'details',
       title: 'Details',
       type: 'string',
