@@ -14,7 +14,7 @@ const Hero = ({ bannerData }) => {
             {bannerData.desc}
           </h2>
           <div className="inline-flex">
-            <button className="px-5 py-2 my-5 mx-2 bg-indigo-700 hover:bg-indigo-800 text-white rounded border-2 border-transparent hover:border-indigo-800 shadow-md transition duration-500 md:text-xl">{bannerData.buttonText}</button>
+            <button className="px-5 py-2 my-5 mx-2 bg-red-500 hover:bg-red-800 text-white border-2 border-transparent hover:border-indigo-800 shadow-md transition duration-500 md:text-xl">{bannerData.buttonText}</button>
           </div>
         </div>
       </div>
