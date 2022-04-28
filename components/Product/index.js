@@ -21,7 +21,7 @@ const Product = ({ product: { image, name, slug, price } }) => {
         </div>
         <div className="flex justify-between items-center">
           <span className="text-3xl font-bold text-gray-900 dark:text-white">&#x20B9;{price}</span>
-          <Link href={`/product/${slug.current}`}><span href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-6 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</span></Link>
+          <Link href={`/product/${slug.current}`}><span href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-6 py-3 text-center">Add to cart</span></Link>
         </div>
       </div>
     </div>
