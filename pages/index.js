@@ -5,7 +5,6 @@ import SaleBanner from '../components/SaleBanner'
 import { client } from '../utils/sanityClient'
 
 const Homepage = ({ products, heroBanner, saleBanner }) => {
-  console.log(saleBanner);
   return (
     <div>
       <Hero bannerData={heroBanner && heroBanner.length && heroBanner[0]} />
@@ -14,6 +13,7 @@ const Homepage = ({ products, heroBanner, saleBanner }) => {
     </div>
   )
 }
+
 export const getServerSideProps = async () => {
   const productsQuery = '*[_type == "product"]';
   const products = await client.fetch(productsQuery)
@@ -26,4 +26,5 @@ export const getServerSideProps = async () => {
     props: { products, heroBanner, saleBanner }
   }
 }
+
 export default Homepage
