@@ -9,11 +9,13 @@ const Layout = ({ children }) => {
       <Head>
         <title>Shoeniverse</title>
       </Head>
-      <Navbar />
-      <main className="main-container">
-        {children}
-      </main>
-      <Footer />
+      <div className="flex flex-col h-screen justify-between">
+        <Navbar />
+        <main className="main-container">
+          {children}
+        </main>
+        <Footer />
+      </div>
     </div>
   )
 }

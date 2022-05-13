@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { client, urlFor } from '../../utils/sanityClient'
 
 const ProductDetails = ({ product }) => {
   console.log(product);
   const { image, name, details, price } = product;
+  const [quantity, setQuantity] = useState(1);
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  }
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  }
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
       <div className="container px-5 py-24 mx-auto">
@@ -72,11 +81,11 @@ const ProductDetails = ({ product }) => {
                 <div className="relative">
                   <div className="rounded border appearance-none border-gray-400">
                     <div className="flex flex-row h-10 w-full rounded-lg relative">
-                      <button data-action="decrement" className="text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
+                      <button data-action="decrement" className="text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-10 rounded-l cursor-pointer outline-none" onClick={decreaseQuantity}>
                         <span className="m-auto text-2xl font-thin">−</span>
                       </button>
-                      <input type="number" className="outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value="0"></input>
-                      <button data-action="increment" className="text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
+                      <div type="number" className="text-center w-10 bg-gray-300 font-semibold text-md hover:text-black md:text-basecursor-default text-gray-700" style={{ paddingTop: "8px" }}>{quantity}</div>
+                      <button data-action="increment" className="text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-10 rounded-r cursor-pointer" onClick={increaseQuantity}>
                         <span className="m-auto text-2xl font-thin">+</span>
                       </button>
                     </div>
@@ -86,7 +95,7 @@ const ProductDetails = ({ product }) => {
             </div>
             <div className="flex">
               <span className="title-font font-medium text-2xl text-gray-900">&#x20B9;{price}</span>
-              <button className="flex ml-6 text-gray-900 border border-gray-400 py-2 px-6 focus:outline-none hover:bg-red-600 hover:text-white rounded">Add to Cart</button>
+              <button className="flex ml-6 text-gray-900 border border-gray-400 py-2 px-6 focus:outline-none hover:bg-red-600 hover:text-white gitgit rounded">Add to Cart</button>
               <button className="flex ml-4 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Buy Now</button>
             </div>
           </div>
