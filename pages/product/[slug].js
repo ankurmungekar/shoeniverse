@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { client, urlFor } from '../../utils/sanityClient'
+import { useStateContext } from '../../context/stateContext'
 
 const ProductDetails = ({ product }) => {
-  console.log(product);
   const { image, name, details, price } = product;
   const [quantity, setQuantity] = useState(1);
+  const { addProduct } = useStateContext();
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
   }
@@ -95,7 +96,7 @@ const ProductDetails = ({ product }) => {
             </div>
             <div className="flex">
               <span className="title-font font-medium text-2xl text-gray-900">&#x20B9;{price}</span>
-              <button className="flex ml-6 text-gray-900 border border-gray-400 py-2 px-6 focus:outline-none hover:bg-red-600 hover:text-white gitgit rounded">Add to Cart</button>
+              <button className="flex ml-6 text-gray-900 border border-gray-400 py-2 px-6 focus:outline-none hover:bg-red-600 hover:text-white gitgit rounded" onClick={() => addProduct(product, quantity)}>Add to Cart</button>
               <button className="flex ml-4 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Buy Now</button>
             </div>
           </div>
