@@ -26,8 +26,30 @@ export const StateContext = ({ children }) => {
       setCartItem([...cartItems, { ...product }]);
     }
     toast.success('Product Added Succesfully');
-    console.log(cartTotal);
-    console.log(cartItems);
+  }
+
+  const removeProduct = (product) => {
+    const foundProduct = cartItems && cartItems.find((item) => item._id === product._id);
+    const updatedCartItems = cartItems && cartItems.filter((item) => item._id !== foundProduct._id);
+    setCartItem(updatedCartItems);
+    setCartTotal((prevCartTotal) => prevCartTotal - (foundProduct.price * foundProduct.quantity))
+  }
+
+  const updateQuantity = (id, type) => {
+    console.log(id);
+    const updatedCartItems = [...cartItems];
+    const index = cartItems && cartItems.findIndex((item) => item._id === id);
+    if (type === 'INCREMENT') {
+      updatedCartItems[index].quantity = updatedCartItems[index].quantity + 1;
+      setCartItem(updatedCartItems);
+      setCartTotal((prevCartTotal) => prevCartTotal + updatedCartItems[index].price)
+    } else {
+      if (updatedCartItems[index].quantity > 1) {
+        updatedCartItems[index].quantity = updatedCartItems[index].quantity - 1;
+        setCartItem(updatedCartItems);
+        setCartTotal((prevCartTotal) => prevCartTotal - updatedCartItems[index].price)
+      }
+    }
   }
 
   return (
@@ -36,7 +58,9 @@ export const StateContext = ({ children }) => {
         showCart,
         cartItems,
         cartTotal,
-        addProduct
+        addProduct,
+        removeProduct,
+        updateQuantity
       }}>
       {children}
     </Context.Provider>

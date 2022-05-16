@@ -15,7 +15,7 @@ const Homepage = ({ products, heroBanner, saleBanner }) => {
 }
 
 export const getServerSideProps = async () => {
-  const productsQuery = '*[_type == "product"]';
+  const productsQuery = '*[_type == "product"]{ _id, image, name, details, price, slug, "brand": *[_type == "brand" && _id == ^.brand._ref][0].name }';
   const products = await client.fetch(productsQuery)
   const heroBannerQuery = '*[_type == "banner"]';
   const heroBanner = await client.fetch(heroBannerQuery)

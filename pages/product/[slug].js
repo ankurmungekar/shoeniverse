@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import Router from 'next/router'
 import { client, urlFor } from '../../utils/sanityClient'
 import { useStateContext } from '../../context/stateContext'
 
 const ProductDetails = ({ product }) => {
-  const { image, name, details, price } = product;
+  console.log(product)
+  const { image, name, details, price, brand } = product;
   const [quantity, setQuantity] = useState(1);
   const { addProduct } = useStateContext();
   const increaseQuantity = () => {
@@ -20,7 +22,7 @@ const ProductDetails = ({ product }) => {
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <img alt="ecommerce" className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src={urlFor(image && image[0])} />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-            <h2 className="text-sm title-font text-gray-500 tracking-widest">BRAND NAME</h2>
+            <h2 className="text-sm title-font text-gray-500 tracking-widest">{brand}</h2>
             <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{name}</h1>
             <div className="flex mb-4">
               <span className="flex items-center">
@@ -97,7 +99,7 @@ const ProductDetails = ({ product }) => {
             <div className="flex">
               <span className="title-font font-medium text-2xl text-gray-900">&#x20B9;{price}</span>
               <button className="flex ml-6 text-gray-900 border border-gray-400 py-2 px-6 focus:outline-none hover:bg-red-600 hover:text-white gitgit rounded" onClick={() => addProduct(product, quantity)}>Add to Cart</button>
-              <button className="flex ml-4 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Buy Now</button>
+              <button className="flex ml-4 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded" onClick={() => { addProduct(product, quantity); Router.push('/cart') }}>Buy Now</button>
             </div>
           </div>
         </div>
@@ -121,7 +123,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps = async ({ params: { slug } }) => {
-  const productQuery = `*[_type == "product" && slug.current == '${slug}'][0]`;
+  const productQuery = `*[_type == "product" && slug.current == '${slug}'][0]{ _id, image, name, details, price, "brand": *[_type == "brand" && _id == ^.brand._ref][0].name }`;
   const product = await client.fetch(productQuery)
   return {
     props: { product }
