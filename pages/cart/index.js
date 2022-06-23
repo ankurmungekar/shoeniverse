@@ -1,14 +1,25 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import axios from 'axios';
 import { useStateContext } from '../../context/stateContext'
-import { urlFor } from '../../utils/sanityClient';
+import { urlFor } from '../../utils/sanityClient'
 import EmptyStateImg from '../../assets/confused-travolta.gif'
+import getStripe from '../../utils/getStripe'
 
 const Cart = () => {
   const shippingCharge = 100;
   const { cartItems, cartTotal, removeProduct, updateQuantity } = useStateContext();
-  console.log(cartItems);
+  const handleCheckout = async () => {
+    const stripe = await getStripe();
+    const response = await axios.post('/api/stripe', cartItems);
+    console.log(response);
+    if (response.statusCode === 500) return;
+    const data = await response.json();
+    toast.loading('Redirecting...');
+    stripe.redirectToCheckout({ sessionId: data.id });
+  }
+
   return (
     <>
       {cartItems && cartItems.length === 0 && <div className="text-center mt-6">
@@ -43,9 +54,9 @@ const Cart = () => {
                   </div>
                 </div>
                 <div className="flex justify-center w-1/5">
-                  <span className="cursor-pointer w-3" onClick={() => updateQuantity(product._id, 'DECREMENT')}><svg className="fill-current text-gray-600" viewBox="0 0 448 512"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" /></svg></span>
+                  <span className="cursor-pointer w-3" style={{ marginTop: "6px" }} onClick={() => updateQuantity(product._id, 'DECREMENT')}><svg className="fill-current text-gray-600" viewBox="0 0 448 512"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" /></svg></span>
                   <input className="mx-2 border text-center w-8" type="text" value={product.quantity} />
-                  <span className="cursor-pointer w-3" onClick={() => updateQuantity(product._id, 'INCREMENT')}><svg className="fill-current text-gray-600" viewBox="0 0 448 512">
+                  <span className="cursor-pointer w-3" style={{ marginTop: "6px" }} onClick={() => updateQuantity(product._id, 'INCREMENT')}><svg className="fill-current text-gray-600" viewBox="0 0 448 512">
                     <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
                   </svg></span>
                 </div>
@@ -82,7 +93,7 @@ const Cart = () => {
                 <span>Total</span>
                 <span>&#x20B9;{cartTotal + shippingCharge}</span>
               </div>
-              <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-lg text-white w-full">Checkout</button>
+              <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-lg text-white w-full" onClick={handleCheckout}>Checkout</button>
             </div>
           </div>
         </div>
