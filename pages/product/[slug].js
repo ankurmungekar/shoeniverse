@@ -4,7 +4,6 @@ import { client, urlFor } from '../../utils/sanityClient'
 import { useStateContext } from '../../context/stateContext'
 
 const ProductDetails = ({ product }) => {
-  console.log(product)
   const { image, name, details, price, brand } = product;
   const [quantity, setQuantity] = useState(1);
   const { addProduct } = useStateContext();
@@ -118,7 +117,7 @@ export const getStaticPaths = async () => {
   }));
   return {
     paths,
-    fallback: true,
+    fallback: 'blocking',
   }
 }
 
