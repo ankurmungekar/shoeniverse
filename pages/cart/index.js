@@ -27,7 +27,7 @@ const Cart = () => {
         <div className="m-auto w-20" style={{ width: "480px" }}>
           <Image src={EmptyStateImg} width="480px" height="204px" alt="John Travolta confused" className="object-cover w-full h-64 rounded-lg" />
         </div>
-        <p className="mt-6 text-gray-500">We can't find anything, add some products.</p>
+        <p className="mt-6 text-gray-500">We cant find anything, add some products.</p>
       </div>}
       {cartItems && cartItems.length !== 0 && <div className="container mx-auto mt-10">
         <div className="flex border my-10">
