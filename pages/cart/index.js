@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { useStateContext } from '../../context/stateContext'
 import { urlFor } from '../../utils/sanityClient'
 import EmptyStateImg from '../../assets/confused-travolta.gif'
@@ -15,9 +16,9 @@ const Cart = () => {
     const response = await axios.post('/api/stripe', cartItems);
     console.log(response);
     if (response.statusCode === 500) return;
-    const data = await response.json();
-    toast.loading('Redirecting...');
-    stripe.redirectToCheckout({ sessionId: data.id });
+    const data = await response.data;
+    window.open(data.url);
+    //stripe.redirectToCheckout({ sessionId: data.id });
   }
 
   return (
